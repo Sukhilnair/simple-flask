@@ -21,3 +21,4 @@ echo 'server {
 }' | sudo tee /etc/nginx/sites-enabled/default >/dev/null
 
 sudo systemctl restart nginx 
+sudo kill -9 `ps aux | grep app.py | awk '{print $2}'`
