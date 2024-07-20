@@ -23,3 +23,4 @@ echo 'server {
 sudo systemctl restart nginx 
 sudo kill -9 `ps aux | grep app.py | awk '{print $2}'`
 nohup python3 app.py &
+echo "Done....."
