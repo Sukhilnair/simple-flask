@@ -21,4 +21,3 @@ echo 'server {
 }' | sudo tee /etc/nginx/sites-enabled/default >/dev/null
 
 sudo systemctl restart nginx 
-python3 app.py &
