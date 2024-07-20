@@ -2,7 +2,7 @@
 sudo apt-get update -y
 sudo apt-get install python3 -y
 sudo apt-get install python3-pip -y
-sudo python3 -m pip install flask
+sudo apt-get install python3-flask -y
 sudo apt-get install nginx -y
 echo 'server {
     listen 80 default_server;
