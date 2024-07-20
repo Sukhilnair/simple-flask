@@ -21,4 +21,4 @@ echo 'server {
 }' | sudo tee /etc/nginx/sites-enabled/default >/dev/null
 
 sudo systemctl restart nginx 
-sudo python3 sukhil-fla.py &
+python3 sukhil-fla.py &
