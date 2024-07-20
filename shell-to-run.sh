@@ -1,8 +1,8 @@
 #!/bin/bash
 sudo apt-get update -y
 sudo apt-get install python3 -y
-sudp apt-get install python3-pip -y
-python3 -m pip install flask
+sudo apt-get install python3-pip -y
+sudo python3 -m pip install flask
 sudo apt-get install nginx -y
 echo 'server {
     listen 80 default_server;
@@ -21,4 +21,4 @@ echo 'server {
 }' | sudo tee /etc/nginx/sites-enabled/default >/dev/null
 
 sudo systemctl restart nginx 
-python3 sukhil-fla.py &
+sudo python3 sukhil-fla.py &
