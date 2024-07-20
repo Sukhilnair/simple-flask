@@ -2,27 +2,13 @@ pipeline {
     agent any
     
     environment {
-        GIT_REPO = "https://github.com/UnpredictablePrashant/CICDPipeline-html.git"
-        SSH_CRED_ID = "prashant-deploy"
+        GIT_REPO = "https://github.com/Sukhilnair/simple-flask.git"
+        SSH_CRED_ID = "sukhil-flask-deploy"
         EC2_USER = "ubuntu"
-        EC_HOST = "3.110.142.165"
+        EC_HOST = "43.203.225.93"
     }
 
     stages {
-        stage('Hello') {
-            steps {
-                echo 'Hello World'
-            }
-        }
-        stage ('File Creation'){
-            steps {
-                sh """
-                touch hello.txt
-                ls
-                pwd
-                """
-            }   
-        }
         stage ('Code clone'){
             steps{
                 git branch: 'main', url: "${env.GIT_REPO}"
@@ -32,18 +18,18 @@ pipeline {
             steps{
                 sshagent (credentials: ["${env.SSH_CRED_ID}"]) {
                     sh """
-                    scp -o StrictHostKeyChecking=no -r * ${env.EC2_USER}@${env.EC_HOST}:/home/ubuntu
+                    scp -o StrictHostKeyChecking=no -r *.py *.sh ${env.EC2_USER}@${env.EC_HOST}:/home/ubuntu/
                     """
                 }
             }
         }
         
-        stage('Deploy to Nginx'){
+        stage('Deploy flasking and configuring Nginx'){
             steps{
                 sshagent (credentials: ["${env.SSH_CRED_ID}"]) {
                     sh """
                     ssh -o StrictHostKeyChecking=no ${env.EC2_USER}@${env.EC_HOST} '
-                        sudo cp -r /home/ubuntu/* /var/www/html
+                        cd /home/ubuntu ; sudo bash shell-to-run.sh
                     '
                     """
                 }

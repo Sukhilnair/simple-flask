@@ -26,11 +26,16 @@ sudo kill -9 `ps aux | grep app.py | awk '{print $2}'`
 SESSION_NAME="flask_app"
 FLASK_COMMAND="python3 /home/ubuntu/app.py"
 
-screen -dmS $SESSION_NAME $FLASK_COMMAND
-
-if screen -list | grep -q "$SESSION_NAME"; then
-  echo "Flask app is running in a screen session named $SESSION_NAME."
-else
-  echo "Failed to start Flask app in a screen session."
+if ! command -v tmux &> /dev/null
+then
+    echo "tmux could not be found, installing it..."
+    sudo apt-get update
+    sudo apt-get install tmux
 fi
-echo "Done....."
+tmux new -d -s $SESSION_NAME $FLASK_COMMAND
+
+if tmux ls | grep -q "$SESSION_NAME"; then
+  echo "Flask app is running in a tmux session named $SESSION_NAME."
+else
+  echo "Failed to start Flask app in a tmux session."
+fi
