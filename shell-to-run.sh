@@ -21,6 +21,16 @@ echo 'server {
 }' | sudo tee /etc/nginx/sites-enabled/default >/dev/null
 
 sudo systemctl restart nginx 
+sudo apt-get install screen -y
 sudo kill -9 `ps aux | grep app.py | awk '{print $2}'`
-nohup python3 app.py &
+SESSION_NAME="flask_app"
+FLASK_COMMAND="python3 /home/ubuntu/app.py"
+
+screen -dmS $SESSION_NAME $FLASK_COMMAND
+
+if screen -list | grep -q "$SESSION_NAME"; then
+  echo "Flask app is running in a screen session named $SESSION_NAME."
+else
+  echo "Failed to start Flask app in a screen session."
+fi
 echo "Done....."
